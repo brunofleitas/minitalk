@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:39:40 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/25 03:09:49 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/25 03:54:54 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ void	send_string(int pid, char *str)
 		char_to_bits(pid, str[i++]);
 }
 
-int	ft_strlen(const char *s)
-{
-	int	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
 char	*ft_itoa(int nbr)
 {
 	int		len;
@@ -57,23 +47,24 @@ char	*ft_itoa(int nbr)
 
 	len = 0;
 	n_tmp = nbr;
-	if (!(str = (char *)malloc(sizeof(char) * len + 1)))
+	str = (char *)malloc(sizeof(char) * len + 1);
+	if (!str)
 		return (NULL);
 	str[len] = '\0';
 	if (nbr == 0)
-	{
 		str[0] = '0';
-		return (str);
-	}
-	while (n_tmp)
+	else 
 	{
-		n_tmp /= 10;
-		len += 1;
-	}
-	while (nbr)
-	{
-		str[--len] = (nbr % 10) + '0';
-		nbr /= 10;
+		while (n_tmp)
+		{
+			n_tmp /= 10;
+			len += 1;
+		}
+		while (nbr)
+		{
+			str[--len] = (nbr % 10) + '0';
+			nbr /= 10;
+		}
 	}
 	return (str);
 }
@@ -86,18 +77,20 @@ void	sighandler(int sig)
 
 int	main(int argc, char **argv)
 {
-	int	lgth;
-	struct sigaction sa;
+	int					lgth;
+	struct sigaction	sa;
+	int					i;
 
 	if (argc == 3)
 	{
 		sigemptyset(&sa.sa_mask);
 		sigaddset(&sa.sa_mask, SIGUSR1);
-
 		sa.sa_handler = &sighandler;
 		sigaction(SIGUSR1, &sa, NULL);
-
-		lgth = ft_strlen(argv[2]);
+		i = 0;
+		while (argv[2][i] != '\0')
+			i++;
+		lgth = i;
 		send_string(atoi(argv[1]), ft_itoa(lgth));
 		send_string(atoi(argv[1]), argv[2]);
 	}
