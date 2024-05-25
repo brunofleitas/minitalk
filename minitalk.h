@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:50:02 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/25 01:29:53 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/25 03:10:05 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,6 @@
 typedef struct s_global
 {
 	int				first_string;
-	//int				pid_recived;
 	int 			i;
 	char			*lgth;
 }					t_global;
