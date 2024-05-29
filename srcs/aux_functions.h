@@ -1,21 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minitalk.h                                         :+:      :+:    :+:   */
+/*   aux_functions.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/24 14:50:02 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/29 16:58:03 by bfleitas         ###   ########.fr       */
+/*   Created: 2024/05/29 16:57:05 by bfleitas          #+#    #+#             */
+/*   Updated: 2024/05/29 16:58:42 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/* ************************************************************************** */
-/* LIBRARIES                                                                  */
-/* ************************************************************************** */
-#include <signal.h>
-#include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
-#include "srcs/ft_printf.h"
-#include "srcs/aux_functions.h"
+
+int	ft_atoi(const char *nptr);
+
+char	*ft_itoa(int nbr);
