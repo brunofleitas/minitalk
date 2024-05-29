@@ -6,9 +6,11 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 11:35:24 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/29 16:59:01 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/30 00:42:20 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "aux_functions.h"
 
 /*
   Parameters: 
