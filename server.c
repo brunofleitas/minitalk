@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:39:51 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/28 16:08:11 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:39:50 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,26 @@
 
 static int	g_first_str;
 
-
+/*
+ Parameters: 
+     int *c: Pointer to the digit to process.
+     char **str: Pointer to the string to allocate.
+     int *str_size: Pointer to the calculated size of the string.
+     int *i: Pointer to the index for string manipulation.
+ Description:
+     Calculates the size of the string to be generated based on digits received
+	 through 'c'. Upon receiving a zero ('0'), allocates memory for the string 
+	 initializes it, and prepares for the next phase of string generation by 
+	 setting 'g_first_str' to 1.
+*/
 void	generate_first_string(int *c, char **str, int *str_size, int *i)
 {
 	if ((*c))
-	{
 		(*str_size) = (((*c) - 48) + ((*str_size) * 10));
-	}
 	else if (!(*c))
 	{
+		ft_printf("%i", (*str_size));
 		g_first_str = 1;
-		ft_printf("\n%i\n", (*str_size));
 		(*str) = malloc(((*str_size) + 1) * sizeof(char));
 		if (!(*str))
 		{
@@ -36,6 +45,18 @@ void	generate_first_string(int *c, char **str, int *str_size, int *i)
 	}
 }
 
+/*
+ Parameters: 
+     int *c: Pointer to the character to append.
+     char **str: Pointer to the string being built.
+     siginfo_t **info: Pointer to signal info for sending SIGUSR1.
+     int *i: Pointer to the current position in the string.
+ Description:
+     Appends a character to the string if 'c' is non-zero. If 'c' is zero, 
+	 prints the string length, the string itself, frees the allocated memory 
+	 for the string, sends SIGUSR1 to the original sender, and resets 
+	 'g_first_str' to indicate readiness for a new string generation cycle.
+*/
 void	generate_second_string(int *c, char **str, siginfo_t **info, int *i)
 {
 	if ((*c))
@@ -45,7 +66,6 @@ void	generate_second_string(int *c, char **str, siginfo_t **info, int *i)
 	}
 	else if (!(*c))
 	{
-		ft_printf("\n%i\n", *i);static int	str_size;
 		ft_printf("%s\n", *str);
 		free(*str);
 		kill((*info)->si_pid, SIGUSR1);
@@ -53,6 +73,16 @@ void	generate_second_string(int *c, char **str, siginfo_t **info, int *i)
 	}
 }
 
+/*
+ Parameters: 
+     int sig: Signal type.
+     siginfo_t *info: Signal info.
+     void *context: Unused context.
+ Description:
+     Processes SIGUSR1 signals, accumulating bits into a byte. Generates a 
+	 string upon collecting 8 bits, toggling between first and second string 
+	 generation based on 'g_first_str'. Responds with SIGUSR2.
+*/
 void	handle_binary(int sig, siginfo_t *info, void *context)
 {
 	static int	c;
@@ -81,6 +111,16 @@ void	handle_binary(int sig, siginfo_t *info, void *context)
 	kill((info)->si_pid, SIGUSR2);
 }
 
+/*
+ Function: main
+ Parameters: 
+     None
+ Return value:
+     int: Does not return due to the infinite loop.
+ Description:
+     Sets up signal handling for SIGUSR1 and SIGUSR2, prints the server's PID
+	 and enters an infinite loop.
+*/
 int	main(void)
 {
 	struct sigaction	sa;

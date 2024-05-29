@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:39:40 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/28 15:45:31 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/28 23:46:06 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,16 @@
 
 static	int g_c_recevied;
 
+/*
+ Parameters: 
+     int pid: Process ID to which the character will be sent as bits.
+     char c: Character to be converted to bits and sent.
+ Description:
+     Converts a single character 'c' into its binary representation and sends 
+	 each bit to the specified process ID using SIGUSR1 for a bit set to 1 and 
+	 SIGUSR2 for a bit set to 0. Waits for confirmation that each bit
+     has been received before proceeding to the next bit.
+*/
 void	char_to_bits(int pid, char c)
 {
 	int	i;
@@ -32,6 +42,15 @@ void	char_to_bits(int pid, char c)
 	}
 }
 
+/*
+ Parameters: 
+     int pid: Process ID to which the string will be sent.
+     char *str: String to be converted to bits and sent.
+ Description:
+     Converts each character of the input string to bits and sends them to the 
+	 specified process ID using the 'char_to_bits' function. Ensures that the 
+	 null terminator of the string is also processed.
+*/
 void	send_string(int pid, char *str)
 {
 	int	i;
@@ -43,36 +62,15 @@ void	send_string(int pid, char *str)
 		char_to_bits(pid, str[i++]);
 }
 
-char	*ft_itoa(int nbr)
-{
-	int		len;
-	long	n_tmp;
-	char	*str;
-
-	len = 0;
-	n_tmp = nbr;
-	str = (char *)malloc(sizeof(char) * len + 1);
-	if (!str)
-		return (NULL);
-	str[len] = '\0';
-	if (nbr == 0)
-		str[0] = '0';
-	else 
-	{
-		while (n_tmp)
-		{
-			n_tmp /= 10;
-			len += 1;
-		}
-		while (nbr)
-		{
-			str[--len] = (nbr % 10) + '0';
-			nbr /= 10;
-		}
-	}
-	return (str);
-}
-
+/*
+ Parameters: 
+     int sig: Signal type (SIGUSR1 or SIGUSR2).
+     siginfo_t *info: Signal info (ignored).
+     void *context: Unused context (ignored).
+ Description:
+     Handles SIGUSR1 and SIGUSR2 signals. Sets 'g_c_received' to 1 upon 
+	 receiving SIGUSR2. Prints a success message upon receiving SIGUSR1.
+*/
 void	sighandler(int sig, siginfo_t *info, void *context)
 {
 	(void) info;
@@ -83,6 +81,20 @@ void	sighandler(int sig, siginfo_t *info, void *context)
 		write(1, "Message printed succesfully!\n", 29);
 }
 
+/*
+ Parameters: 
+     int argc: Argument count.
+     char **argv: Argument vector.
+ Return value:
+     int: Returns 0 on normal execution.
+ Description:
+     If exactly three arguments are passed, configures signal handling for 
+	 SIGUSR1 and SIGUSR2 using a custom sigaction structure. Converts the 
+	 length of the third argument to a string and sends it along with the
+     first argument as part of a string generation process. Then, sends the 
+	 literal content of the third argument. The program ends normally after 
+	 performing these operations.
+*/
 int	main(int argc, char **argv)
 {
 	int					lgth;
