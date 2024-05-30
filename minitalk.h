@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 14:50:02 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/30 12:50:23 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:55:27 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 /* ************************************************************************** */
 /* LIBRARIES                                                                  */
 /* ************************************************************************** */
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <stdarg.h>
+# include <signal.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
 /* ************************************************************************** */
 /*                              DEFINITIONS                                   */
@@ -35,7 +35,7 @@
 
 /*AUXILIARY FUNCTIONS*/
 char	*ft_itoa(int nbr);
-int     ft_atoi(const char *nptr);
+int		ft_atoi(const char *nptr);
 
 /*TO PRINT CHARS AND STRINGS*/
 int		ft_putchar_fd_pf(char c, int fd);

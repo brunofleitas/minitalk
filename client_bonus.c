@@ -6,23 +6,23 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:39:40 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/29 16:54:40 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:54:55 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static	int g_c_recevied;
+static int	g_c_recevied;
 
 /*
- Parameters: 
-     int pid: Process ID to which the character will be sent as bits.
-     char c: Character to be converted to bits and sent.
+ Parameters:
+		int pid: Process ID to which the character will be sent as bits.
+		char c: Character to be converted to bits and sent.
  Description:
-     Converts a single character 'c' into its binary representation and sends 
-	 each bit to the specified process ID using SIGUSR1 for a bit set to 1 and 
-	 SIGUSR2 for a bit set to 0. Waits for confirmation that each bit
-     has been received before proceeding to the next bit.
+		Converts a single character 'c' into its binary representation and sends
+		each bit to the specified process ID using SIGUSR1 for a bit set to 1 and
+		SIGUSR2 for a bit set to 0. Waits for confirmation that each bit
+		has been received before proceeding to the next bit.
 */
 void	char_to_bits(int pid, char c)
 {
@@ -43,13 +43,13 @@ void	char_to_bits(int pid, char c)
 }
 
 /*
- Parameters: 
-     int pid: Process ID to which the string will be sent.
-     char *str: String to be converted to bits and sent.
+ Parameters:
+		int pid: Process ID to which the string will be sent.
+		char *str: String to be converted to bits and sent.
  Description:
-     Converts each character of the input string to bits and sends them to the 
-	 specified process ID using the 'char_to_bits' function. Ensures that the 
-	 null terminator of the string is also processed.
+		Converts each character of the input string to bits and sends them to the
+		specified process ID using the 'char_to_bits' function. Ensures that the
+		null terminator of the string is also processed.
 */
 void	send_string(int pid, char *str)
 {
@@ -63,18 +63,18 @@ void	send_string(int pid, char *str)
 }
 
 /*
- Parameters: 
-     int sig: Signal type (SIGUSR1 or SIGUSR2).
-     siginfo_t *info: Signal info (ignored).
-     void *context: Unused context (ignored).
+ Parameters:
+		int sig: Signal type (SIGUSR1 or SIGUSR2).
+		siginfo_t *info: Signal info (ignored).
+		void *context: Unused context (ignored).
  Description:
-     Handles SIGUSR1 and SIGUSR2 signals. Sets 'g_c_received' to 1 upon 
-	 receiving SIGUSR2. Prints a success message upon receiving SIGUSR1.
+		Handles SIGUSR1 and SIGUSR2 signals. Sets 'g_c_received' to 1 upon
+		receiving SIGUSR2. Prints a success message upon receiving SIGUSR1.
 */
 void	sighandler(int sig, siginfo_t *info, void *context)
 {
-	(void) info;
-	(void) context;
+	(void)info;
+	(void)context;
 	if (sig == SIGUSR2)
 		g_c_recevied = 1;
 	if (sig == SIGUSR1)
@@ -82,18 +82,18 @@ void	sighandler(int sig, siginfo_t *info, void *context)
 }
 
 /*
- Parameters: 
-     int argc: Argument count.
-     char **argv: Argument vector.
+ Parameters:
+		int argc: Argument count.
+		char **argv: Argument vector.
  Return value:
-     int: Returns 0 on normal execution.
+		int: Returns 0 on normal execution.
  Description:
-     If exactly three arguments are passed, configures signal handling for 
-	 SIGUSR1 and SIGUSR2 using a custom sigaction structure. Converts the 
-	 length of the third argument to a string and sends it along with the
-     first argument as part of a string generation process. Then, sends the 
-	 literal content of the third argument. The program ends normally after 
-	 performing these operations.
+		If exactly three arguments are passed, configures signal handling for
+		SIGUSR1 and SIGUSR2 using a custom sigaction structure. Converts the
+		length of the third argument to a string and sends it along with the
+		first argument as part of a string generation process. Then, sends the
+		literal content of the third argument. The program ends normally after
+		performing these operations.
 */
 int	main(int argc, char **argv)
 {
