@@ -28,7 +28,6 @@
 int	print_format(va_list *arg, const char *outputType)
 {
 	int		chars_printed;
-	void	*ptr;
 
 	chars_printed = 0;
 	if (*outputType == 'c')
@@ -39,17 +38,6 @@ int	print_format(va_list *arg, const char *outputType)
 		chars_printed += ft_putstr_fd_pf(va_arg(*arg, char *), 1);
 	if (*outputType == 'i' || *outputType == 'd')
 		chars_printed += ft_putnbr_fd_pf(va_arg(*arg, int), 1);
-	if (*outputType == 'u')
-		chars_printed += ft_putunsnbr_fd_pf(va_arg(*arg, unsigned int), 1);
-	if (*outputType == 'x')
-		chars_printed += ft_put_hex_pf(va_arg(*arg, unsigned int), 1, LOW_HEX);
-	if (*outputType == 'X')
-		chars_printed += ft_put_hex_pf(va_arg(*arg, unsigned int), 1, UP_HEX);
-	if (*outputType == 'p')
-	{
-		ptr = va_arg(*arg, void *);
-		chars_printed += ft_put_ptr_pf(ptr, 1, LOW_HEX);
-	}
 	return (chars_printed);
 }
 

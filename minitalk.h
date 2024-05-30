@@ -18,17 +18,8 @@
 /* ************************************************************************** */
 # include <signal.h>
 # include <stdarg.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-
-/* ************************************************************************** */
-/*                              DEFINITIONS                                   */
-/* ************************************************************************** */
-
-# define LOW_HEX "0123456789abcdef"
-# define UP_HEX "0123456789ABCDEF"
-
 /* ************************************************************************** */
 /* FUNCTIONS                                                                  */
 /* ************************************************************************** */
@@ -47,15 +38,6 @@ int		print_digit_pf(long n, int fd);
 int		recursive_pf(long n, int fd);
 int		ft_putnbr_fd_pf(int n, int fd);
 int		ft_putunsnbr_fd_pf(unsigned int n, int fd);
-
-/*TO PRINT NUMBERS IN HEXADECIMAL*/
-int		ft_generate_hex_pf(unsigned long long n, char *hex,
-			const char *hex_chars);
-void	ft_reverse_string_pf(char *str, int length);
-int		ft_convert_to_hex_pf(unsigned long long n, char *hex,
-			const char *hex_chars);
-int		ft_put_hex_pf(unsigned long long n, int fd, const char *hex_chars);
-int		ft_put_ptr_pf(void *ptr, int fd, const char *hex_chars);
 
 /*THE MAIN PRINTF FUNCTION AND THE SPECIFIER FUNCTION*/
 int		print_format(va_list *arg, const char *outputType);

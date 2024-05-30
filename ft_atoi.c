@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "minitalk.h"
+
 /*
   Parameters: 
       str: The string to convert to an integer.

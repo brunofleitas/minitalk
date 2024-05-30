@@ -16,10 +16,15 @@ CFLAGS	= -Wall -Werror -Wextra
 
 RM	= rm -rf
 
-SRCSC = client.c 
-SRCSS = server.c
-SRCSBC = client_bonus.c 
-SRCSBS = server_bonus.c
+SRCSC = client.c ft_atoi.c ft_itoa.c
+SRCSS = server.c ft_printf.c output_char_string.c output_nbr.c
+SRCSBC = client_bonus.c ft_atoi.c ft_itoa.c
+SRCSBS = server_bonus.c ft_printf.c output_char_string.c output_nbr.c
+
+CLIENT_OBJS	= $(SRCSC:.c=.o)
+SERVER_OBJS	= $(SRCSS:.c=.o)
+BONUS_CLIENT_OBJS	= $(SRCSBC:.c=.o)
+BONUS_SERVER_OBJS	= $(SRCSBS:.c=.o)
 
 NAME_CLIENT	= client
 NAME_SERV	= server	
@@ -28,21 +33,25 @@ BONUS_NAME_SERV = server_bonus
 
 all: $(NAME_CLIENT) $(NAME_SERV)
 
-$(NAME_CLIENT): $(SRCSC)
-	$(CC) $(CFLAGS) $(SRCSC) -o $(NAME_CLIENT)
+$(NAME_CLIENT): $(CLIENT_OBJS) 
+	$(CC) $(CFLAGS) $(CLIENT_OBJS) -o $(NAME_CLIENT)
 
-$(NAME_SERV): $(SRCSS)
-	$(CC) $(CFLAGS) $(SRCSS) -o $(NAME_SERV)
+$(NAME_SERV): $(SERVER_OBJS) 
+	$(CC) $(CFLAGS) $(SERVER_OBJS) -o $(NAME_SERV)
 
 bonus: $(BONUS_NAME_CLIENT) $(BONUS_NAME_SERV)
 
-$(BONUS_NAME_CLIENT): $(SRCSBC)
-	$(CC) $(CFLAGS) $(SRCSBC) -o $(BONUS_NAME_CLIENT)
+$(BONUS_NAME_CLIENT): $(BONUS_CLIENT_OBJS) 
+	$(CC) $(CFLAGS) $(BONUS_CLIENT_OBJS) -o $(BONUS_NAME_CLIENT)
 
-$(BONUS_NAME_SERV): $(SRCSBS)
-	$(CC) $(CFLAGS) $(SRCSBS) -o $(BONUS_NAME_SERV)
+$(BONUS_NAME_SERV): $(BONUS_SERVER_OBJS) 
+	$(CC) $(CFLAGS) $(BONUS_SERVER_OBJS) -o $(BONUS_NAME_SERV)
 
 clean:
+		$(RM) $(CLIENT_OBJS) $(SERVER_OBJS) \
+		$(BONUS_CLIENT_OBJS) $(BONUS_SERVER_OBJS) 
+
+fclean: clean
 	@if [ -f $(NAME_CLIENT) ]; then \
 	echo "Removing $(NAME_CLIENT)"; \
 	$(RM) $(NAME_CLIENT); fi
@@ -55,8 +64,6 @@ clean:
 	@if [ -f $(BONUS_NAME_SERV) ]; then \
 	echo "Removing $(BONUS_NAME_SERV)"; \
 	$(RM) $(BONUS_NAME_SERV); fi
-
-fclean: clean
 
 re: fclean all
 
