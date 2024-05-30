@@ -21,11 +21,6 @@ SRCSS = server.c
 SRCSBC = client_bonus.c 
 SRCSBS = server_bonus.c
 
-CLIENT_OBJS	= $(CLIENT_SRCS:.c=.o)
-SERVER_OBJS	= $(SERVER_SRCS:.c=.o)
-BONUS_CLIENT_OBJS	= $(BONUS_CLIENT_SRCS:.c=.o)
-BONUS_SERVER_OBJS	= $(BONUS_SERVER_SRCS:.c=.o)
-
 NAME_CLIENT	= client
 NAME_SERV	= server	
 BONUS_NAME_CLIENT = client_bonus
@@ -48,10 +43,20 @@ $(BONUS_NAME_SERV): $(SRCSBS)
 	$(CC) $(CFLAGS) $(SRCSBS) -o $(BONUS_NAME_SERV)
 
 clean:
-	$(RM) $(CLIENT_OBJS) $(SERVER_OBJS) $(BONUS_CLIENT_OBJS) $(BONUS_SERVER_OBJS)
+	@if [ -f $(NAME_CLIENT) ]; then \
+	echo "Removing $(NAME_CLIENT)"; \
+	$(RM) $(NAME_CLIENT); fi
+	@if [ -f $(NAME_SERV) ]; then \
+	echo "Removing $(NAME_SERV)"; \
+	$(RM) $(NAME_SERV); fi
+	@if [ -f $(BONUS_NAME_CLIENT) ]; then \
+	echo "Removing $(BONUS_NAME_CLIENT)"; \
+	$(RM) $(BONUS_NAME_CLIENT); fi
+	@if [ -f $(BONUS_NAME_SERV) ]; then \
+	echo "Removing $(BONUS_NAME_SERV)"; \
+	$(RM) $(BONUS_NAME_SERV); fi
 
 fclean: clean
-	$(RM) $(NAME_CLIENT) $(NAME_SERV) $(BONUS_NAME_CLIENT) $(BONUS_NAME_SERV)
 
 re: fclean all
 

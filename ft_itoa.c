@@ -6,11 +6,11 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 23:43:51 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/29 16:59:19 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:46:14 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "aux_functions.h"
+#include "minitalk.h"
 
 /*
  Parameters: 

@@ -6,13 +6,13 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:39:40 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/30 01:05:43 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:38:31 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-static	int g_c_recevied;
+static int	g_c_recevied;
 
 /*
  Parameters: 
@@ -77,8 +77,6 @@ void	sighandler(int sig, siginfo_t *info, void *context)
 	(void) context;
 	if (sig == SIGUSR2)
 		g_c_recevied = 1;
-	if (sig == SIGUSR1)
-		write(1, "Message printed succesfully!\n", 29);
 }
 
 /*

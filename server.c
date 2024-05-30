@@ -6,7 +6,7 @@
 /*   By: bfleitas <bfleitas@student.42luxembourg    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 14:39:51 by bfleitas          #+#    #+#             */
-/*   Updated: 2024/05/30 01:05:52 by bfleitas         ###   ########.fr       */
+/*   Updated: 2024/05/30 11:25:04 by bfleitas         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	generate_first_string(int *c, char **str, int *str_size, int *i)
 	 for the string, sends SIGUSR1 to the original sender, and resets 
 	 'g_first_str' to indicate readiness for a new string generation cycle.
 */
-void	generate_second_string(int *c, char **str, siginfo_t **info, int *i)
+void	generate_second_string(int *c, char **str, int *i)
 {
 	if ((*c))
 	{
@@ -67,7 +67,6 @@ void	generate_second_string(int *c, char **str, siginfo_t **info, int *i)
 	{
 		ft_printf("%s\n", *str);
 		free(*str);
-		kill((*info)->si_pid, SIGUSR1);
 		g_first_str = 0;
 	}
 }
@@ -101,7 +100,7 @@ void	handle_binary(int sig, siginfo_t *info, void *context)
 			generate_first_string(&c, &str, &str_size, &i);
 		else if (g_first_str == 1)
 		{
-			generate_second_string(&c, &str, &info, &i);
+			generate_second_string(&c, &str, &i);
 			str_size = 0;
 		}
 		bit = 0;
